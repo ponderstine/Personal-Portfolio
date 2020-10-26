@@ -5,3 +5,4 @@ Stacks
 Queues
 Binary Search Trees
 Red Black Trees
+Graphs
