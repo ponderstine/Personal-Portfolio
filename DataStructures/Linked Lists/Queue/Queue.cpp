@@ -76,6 +76,7 @@ void Queue::enqueue(int key){
         front = new Node;
         rear = front;
         front->key = key;
+        counter = 1;
         return;
     }
 
@@ -88,6 +89,7 @@ void Queue::enqueue(int key){
 
     // repoint the rear to the node that was just added, and return
     rear = nn;
+    counter++;
     return;
 };
 
@@ -116,6 +118,7 @@ void Queue::dequeue(){
     delete front;
     front = cur;
     cur->next = NULL;
+    counter--;
     return;
 };
 

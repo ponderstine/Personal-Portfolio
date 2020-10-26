@@ -28,5 +28,4 @@ class Queue{                    // A class for the methods and variables of the 
         int counter=0;          // a counter for the size of the queue
         Node* front = NULL;     // a pointer to the front of the queue (i.e the next node to be dequeued)
         Node* rear = NULL;      // a pointer to the rear of the queue (i.e the latest node to be enqueued)
-
 };
