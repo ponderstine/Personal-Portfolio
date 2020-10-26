@@ -1,7 +1,7 @@
 #include "SLL.hpp"
 
 /*
-Initiator function: this function will a linked list with the head node pointing to NULL.
+Initiator function: this function will create a linked list with the head node pointing to NULL.
 Inputs: None
 Returns: None
 */
@@ -10,7 +10,7 @@ singlyLinkedList::singlyLinkedList(){
 };
 
 /*
-Initiator function: this function will a linked list with the head node containing the key value passed in.
+Initiator function: this function will create a linked list with the head node containing the key value passed in.
 Inputs: int key
 Returns: None
 */
