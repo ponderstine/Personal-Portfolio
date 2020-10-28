@@ -20,8 +20,9 @@ class binarySearchTree{                             // A class for the methods a
         void preOrderPrintHelper(Node* cur);        // A recursive helper function for the pre order print function.
         void inOrderPrintHelper(Node* cur);         // A recursive helper function for the in order print function.
         void postOrderPrintHelper(Node* cur);       // A recursive helper function for the post order print function
-        void levelOrderPrintHelper(Node* cur);      // A recursive helper function for the level order print function.
+        void levelOrderPrintHelper(Node* cur, int level, int counter);      // A recursive helper function for the level order print function.
         int sizeHelper(Node* cur);                  // A recursive helper function for the size getter.
+        int heightHelper(Node* cur);
 
     public:
 
@@ -39,4 +40,5 @@ class binarySearchTree{                             // A class for the methods a
         void leftRotate(Node* cur);                 // A function to perform a left rotation on the passed in node.
         void rightRotate(Node* cur);                // A function to perform a right rotation on the passed in node.
         int size();                                 // A function to count the size (number of nodes) currently in the binary search tree.
+        int height();                               // A function to count the height of the binary search tree
 };

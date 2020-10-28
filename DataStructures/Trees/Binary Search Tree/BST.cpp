@@ -172,6 +172,19 @@ void binarySearchTree::postOrderPrint(){
     return;
 };
 
+void binarySearchTree::levelOrderPrintHelper(Node* cur, int level, int counter){
+
+
+
+};
+
+void binarySearchTree::levelOrderPrint(){
+
+    // Call the recursive level order print function on the root
+    levelOrderPrintHelper(root, 0, 0);
+    return;
+};
+
 Node* binarySearchTree::searchFor(int key){
 
     // If tree is empty then there is nothing to search, no way the tree contains the node with the passed in key value.
@@ -635,3 +648,36 @@ int binarySearchTree::size(){
     // Run the recursive size counter function on the root node
     return sizeHelper(root);
 };
+
+int binarySearchTree::heightHelper(Node* cur){
+
+    // Base case: if cur node is NULL then return 0
+    if (cur == NULL){
+        return 0;
+    }
+
+    // General case
+    // Call recursive function on left subtree
+    int left = heightHelper(cur->leftChild);
+
+    // Call recursive function on right subtree
+    int right = heightHelper(cur->rightChild);
+
+    // return greater value plus 1 (we only care about the subtree with the greater height and add 1 for the current node)
+    if (left > right){
+
+        return left++;
+
+    } else {
+
+        return right++;
+
+    }
+}
+
+int binarySearchTree::height(){
+
+    // height helper returns # of nodes, N, in longest path from root to leaves
+    // height is N-1 so return heightHelper()-1
+    return heightHelper(root)-1;
+}
