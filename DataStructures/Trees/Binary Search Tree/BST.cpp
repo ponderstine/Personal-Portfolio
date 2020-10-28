@@ -271,81 +271,119 @@ void binarySearchTree::addNode(int key){
 
 void binarySearchTree::deleteNode(int key){
 
+    // If tree is empty then there is nothing to delete
     if(isEmpty()){
 
+        // Print statement to std out
         cout << "Tree is empty so cannot delete node: " << key << "." << endl;
         return;
     }
 
-    Node* cur = root;
-
+    // check if root node is the node that has to be deleted
     if (root->key == key){
 
         //need to delete root
 
+        // check how many kids the root has (4 cases)
         if (root->leftChild == NULL && root->rightChild == NULL){
 
-            //no kids
+            //no kids => can just delete and set root to null
             delete root;
             root = NULL;
             return;
 
         } else if (root->leftChild != NULL && root->rightChild == NULL){
 
-            // only left child
+            // only left child, left child will replace root
+            // initialize temporary pointer to old root
             Node* temp = root;
+
+            // reassign new root
             root = temp->leftChild;
+
+            // fix new root parent pointer
+            root->parent = NULL;
+
+            // delete old root
             delete temp;
             return;
 
         } else if (root->leftChild == NULL && root->rightChild != NULL){
 
-            // only right child
+            // only right child, right child will replace root
+            // initialize temporary pointer to old root
             Node* temp = root;
+
+            // reassign new root
             root = temp->rightChild;
+
+            //fix new root parent pointer
+            root->parent = NULL;
+
+            // delete old root
             delete temp;
             return;
 
         } else {
 
-            // two kids => find min value on right subtree and replace
-            cur = root->rightChild;
+            // two kids => find min value on right subtree and replace (can also replace with max value on left subtree)
+            // initialize pointer to find min value of right subtree
+            Node* cur = root->rightChild;
+
+            // while there is a lesser value to traverse to (left child is not NULL), traverse left
             while (cur->leftChild != NULL){
 
+                // traverse left
                 cur = cur->leftChild;
             }
 
             // cur pointing at min value of right subtree
             root->key = cur->key;
 
+            // if replacement node has a right child, need to assign that child in the replacements place (replacement-ception)
             if (cur->rightChild != NULL){
                 
+                // fix pointers to replace the replacement
                 cur->parent->leftChild = cur->rightChild;
+                cur->rightChild->parent = cur->parent;
             }
+
+            // delete node that replaced the root
             delete cur;
-            // Don't need to reassign root pointer since we aren't deleting the root, only transferring data too the root 
+            
+            // NOTE: Don't need to reassign root pointer since we aren't deleting the root, only transferring data too the root 
 
         }
     } else {
 
+        // root is not node to be deleted
+
+        // make pointer to traverse tree
+        Node* cur = root;
+
         // search rest of tree for node to delete
         while(cur != NULL){
 
+            // if current node has the key we are looking for, this is the node we need to delete
             if(key == cur->key){
                 
-                // found node to be deleted
+               // Check how many kids the node has (4 cases)
                 if (cur->leftChild == NULL && cur->rightChild == NULL){
 
                     //no kids
                     if (cur == cur->parent->leftChild){
 
+                        // fix parent pointer
                         cur->parent->leftChild = NULL;
 
                     } else {
 
+                        // fix parent pointer
                         cur->parent->rightChild = NULL;
 
                     }
+                    
+                    // delete node
                     delete cur;
                     return;
 
@@ -354,14 +392,20 @@ void binarySearchTree::deleteNode(int key){
                     // only left child
                     if (cur == cur->parent->leftChild){
 
+                        //fix child pointer
                         cur->parent->leftChild = cur->leftChild;
 
                     } else {
 
+                        // fix child pointer
                         cur->parent->rightChild = cur->leftChild;
 
                     }
+
+                    // fix parent pointer
                     cur->leftChild->parent = cur->parent;
+
+                    // delete node
                     delete cur;
                     return;
 
@@ -370,39 +414,55 @@ void binarySearchTree::deleteNode(int key){
                     // only right child
                     if (cur == cur->parent->leftChild){
 
+                        //fix child pointer
                         cur->parent->leftChild = cur->leftChild;
 
                     } else {
 
+                        //fix child pointer
                         cur->parent->rightChild = cur->leftChild;
 
                     }
+
+                    // fix parent pointer
                     cur->leftChild->parent = cur->parent;
+
+                    // delete node
                     delete cur;
                     return;
 
                 } else {
 
                     // two kids => find min value on right subtree and replace
+                    // initiate temporary pointer to traverse right subtree for min value
                     Node* temp = cur->rightChild;
+
+                    // while there is a lower value, traverse to it
                     while (temp->leftChild != NULL){
 
+                        // traverse to left child
                         temp = temp->leftChild;
                     }
 
                     // cur pointing at min value of right subtree
                     cur->key = temp->key;
 
+                    // if replacement node has a right child, need to reassign so right child replaces replacement node
                     if (temp->rightChild != NULL){
                         
+                        // fix pointers
                         temp->parent->leftChild = temp->rightChild;
+                        temp->rightChild->parent = temp->parent;
                     }
+
+                    // delete node
                     delete temp;
                 }
             }
         }
+        
         //traversed whole list and didn't find node with key value passed in
-
+        // Print statement to std out
         cout << "Could not delete, tree does not contain node: " << key << endl;
         return;
     }
