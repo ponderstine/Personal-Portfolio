@@ -478,8 +478,66 @@ void binarySearchTree::leftRotate(Node* cur){
         return;
     }
 
-    //BLAH
+    //if no right child then can't rotate (?)
+    if(cur->rightChild == NULL){
+        return;
+    }
 
+    // assign pointers to pivot (what will take cur's place) and temp (the subtree of pivot that will be under cur after rotation)
+    Node* pivot = cur->rightChild;
+    Node* temp = pivot->leftChild;
+
+    // NOTE: temp can be cur->rightChild->leftChild no matter what. Either it will be NULL if pivot has no left child or it will be a subtree that needs to be saved.
+
+    // get root and parent pointers correct
+    if(root == cur){
+        //rotating on root
+
+        // set new root to pivot
+        root = pivot;
+
+        // pivot is root so it's parent is null
+        pivot->parent = NULL;
+
+        // make pivot the parent of cur
+        cur->parent = pivot;
+
+        // set cur to be pivots child
+        pivot->leftChild = cur;
+
+        // set temp to be cur's child
+        cur->rightChild = temp;
+
+        // set temp's parent pointer to cur
+        temp->parent = cur;
+
+    } else {
+        
+        // rotating not on root
+
+        // shift pivot's parent
+        pivot->parent = cur->parent;
+
+        // shift the parent's child pointer to the pivot
+        if(cur->parent->leftChild == cur){
+
+            cur->parent->leftChild = pivot;
+
+        } else {
+
+            cur->parent->rightChild = pivot;
+
+        }
+
+        // make pivot the parent of cur
+        cur->parent = pivot;
+        pivot->leftChild = cur;
+
+        //attach temp under cur
+        cur->rightChild = temp;
+        temp->parent = cur->rightChild;
+    }
+    return;
 };
 
 void binarySearchTree::rightRotate(Node* cur){
@@ -488,12 +546,70 @@ void binarySearchTree::rightRotate(Node* cur){
     if(isEmpty()){
 
         // Print statement to std out
-        cout << "Tree is empty so cannot right rotate." << endl;
+        cout << "Tree is empty so cannot left rotate." << endl;
         return;
     }
 
-    //BLAH
+    //if no right child then can't rotate (?)
+    if(cur->leftChild == NULL){
+        return;
+    }
 
+    // assign pointers to pivot (what will take cur's place) and temp (the subtree of pivot that will be under cur after rotation)
+    Node* pivot = cur->leftChild;
+    Node* temp = pivot->rightChild;
+
+    // NOTE: temp can be cur->rightChild->leftChild no matter what. Either it will be NULL if pivot has no left child or it will be a subtree that needs to be saved.
+
+    // get root and parent pointers correct
+    if(root == cur){
+        //rotating on root
+
+        // set new root to pivot
+        root = pivot;
+
+        // pivot is root so it's parent is null
+        pivot->parent = NULL;
+
+        // make pivot the parent of cur
+        cur->parent = pivot;
+
+        // set cur to be pivots child
+        pivot->rightChild = cur;
+
+        // set temp to be cur's child
+        cur->leftChild = temp;
+
+        // set temp's parent pointer to cur
+        temp->parent = cur;
+
+    } else {
+        
+        // rotating not on root
+
+        // shift pivot's parent
+        pivot->parent = cur->parent;
+
+        // shift the parent's child pointer to the pivot
+        if(cur->parent->leftChild == cur){
+
+            cur->parent->leftChild = pivot;
+
+        } else {
+
+            cur->parent->rightChild = pivot;
+
+        }
+
+        // make pivot the parent of cur
+        cur->parent = pivot;
+        pivot->rightChild = cur;
+
+        //attach temp under cur
+        cur->leftChild = temp;
+        temp->parent = cur->leftChild;
+    }
+    return;
 };
 
 int binarySearchTree::sizeHelper(Node* cur){
