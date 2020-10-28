@@ -89,6 +89,9 @@ void binarySearchTree::preOrderPrint(){
 
     // Finish print by ending the line
     cout << endl;
+
+    // Print ending statement
+    cout << "Finished printing preorder." << endl;
     return;
 };
 
@@ -129,6 +132,9 @@ void binarySearchTree::inOrderPrint(){
 
     // Finish print by ending the line
     cout << endl;
+
+    // Print ending statement
+    cout << "Finished printing in order." << endl;
     return;
 };
 
@@ -169,19 +175,60 @@ void binarySearchTree::postOrderPrint(){
 
     // Finish print by ending the line
     cout << endl;
+
+    // Print ending statement
+    cout << "Finished printing postorder." << endl;
     return;
 };
 
-void binarySearchTree::levelOrderPrintHelper(Node* cur, int level, int counter){
+void binarySearchTree::printLevel(Node* cur, int counter){
 
+    // Base case: if cur is NULL return;
+    if(cur == NULL){
 
+        return;
 
+    } else if (counter == 0){
+
+        // if counter is 0 then we are on the correct level and should print the current value
+        cout << cur->key << " ";
+        return;
+
+    } else {
+
+        // decrement counter for next level of recursion
+        counter--;
+
+        // call recursive function on left child
+        printLevel(cur->leftChild, counter);
+
+        // call recursive function on right child
+        printLevel(cur->rightChild, counter);
+
+        // End line for next level of traversal
+        cout << endl;
+        return;
+    }
 };
 
 void binarySearchTree::levelOrderPrint(){
 
-    // Call the recursive level order print function on the root
-    levelOrderPrintHelper(root, 0, 0);
+    // get height of the tree
+    int h = height();
+
+    // Print statement to begin level order printing
+    cout << "Level order printing tree..." << endl;
+
+    // for every level, starting at the root and going to the max height h, print the given level
+    for (int i = 0; i < h; i++){
+
+        // i is the counter for how many levels down to traverse before printing
+        printLevel(root, i);
+
+    }
+
+    // Print ending statement
+    cout << "Finished printing level order." << endl;
     return;
 };
 
