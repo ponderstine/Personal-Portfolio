@@ -10,5 +10,9 @@ Trees
   Binary Search Trees
   Red Black Trees
 Graphs
+  Undirected Graphs
+  Directed Graphs
+  Undirected Weighted Graphs
+  Directed Weighted Graphs
 Hash Tables
 Heaps
